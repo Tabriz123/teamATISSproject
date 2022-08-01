@@ -8,7 +8,7 @@ let DB = require('../config/db');
 let Util_1 = require("../Util");
 
 let userModel = require('../models/user');
-let User = userModel.User; 
+let User = userModel.User; // alias
 
 module.exports.displayHomePage = (req, res, next) => {
     res.render('index', {title: 'Home', displayName: (0, Util_1.UserDisplayName)(req)});
@@ -34,12 +34,12 @@ module.exports.displayLoginPage = (req, res, next) => {
 module.exports.processLoginPage = (req, res, next) => {
     passport.authenticate('local',
     (err, user, info) => {
-        // server error
+        // server err?
         if(err)
         {
             return next(err);
         }
-        // login error
+        // is there a user login error?
         if(!user)
         {
             req.flash('loginMessage', 'Authentication Error');
@@ -70,7 +70,7 @@ module.exports.processLoginPage = (req, res, next) => {
 }
 
 module.exports.displayRegisterPage = (req, res, next) => {
-    // checks if user isn't already logged in
+    // check if the user is not already logged in
     if(!req.user)
     {
         res.render('auth/register',
@@ -87,7 +87,7 @@ module.exports.displayRegisterPage = (req, res, next) => {
 }
 
 module.exports.processRegisterPage = (req, res, next) => {
-    // instantiate a new user
+    // instantiate a user object
     let newUser = new User({
         username: req.body.username,
         password: req.body.password,
@@ -116,6 +116,8 @@ module.exports.processRegisterPage = (req, res, next) => {
         }
         else
         {
+            // if no error exists, then registration is successful
+
             return passport.authenticate('local')(req, res, () => {
                 res.redirect('/')
             });

@@ -1,3 +1,4 @@
+// require modules for the User Model
 let mongoose = require('mongoose');
 let passportLocalMongoose = require('passport-local-mongoose');
 
@@ -50,7 +51,7 @@ let User = mongoose.Schema
     }
 );
 
-
+// configure options for User Model
 
 let options = ({ missingPasswordError: 'Wrong or Missing Password'});
 

@@ -70,7 +70,7 @@ module.exports.processLoginPage = (req, res, next) => {
 }
 
 module.exports.displayRegisterPage = (req, res, next) => {
-    // checks if user isn't already logged in
+    // checks if user is not already logged in
     if(!req.user)
     {
         res.render('auth/register',
@@ -87,7 +87,7 @@ module.exports.displayRegisterPage = (req, res, next) => {
 }
 
 module.exports.processRegisterPage = (req, res, next) => {
-    // instantiate a new user
+    // instantiate a user object
     let newUser = new User({
         username: req.body.username,
         password: req.body.password,
@@ -116,6 +116,8 @@ module.exports.processRegisterPage = (req, res, next) => {
         }
         else
         {
+            // if no error exists, then registration is successful
+
             return passport.authenticate('local')(req, res, () => {
                 res.redirect('/')
             });
